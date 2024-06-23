@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   NavigationMenu,
@@ -8,15 +9,20 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
-import { Separator } from "../ui/separator";
 import { cn } from "@/lib/utils";
 import { NavItems } from "@/configs/NavItems";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const MainNav = () => {
+  const pathname = usePathname();
+  console.log(pathname);
   return (
     <div className="flex gap-6 md:gap-10 h-16 ">
-      <Link href="/" className="flex items-center fill-primary ">
+      <Link
+        href="/"
+        className="flex items-center fill-primary hover:bg-inherit"
+      >
         <Image
           src="/bion-logo/black.svg"
           alt="FK BION"
@@ -25,46 +31,65 @@ const MainNav = () => {
           className="dark:invert max-h-full"
         />
       </Link>
-      <NavigationMenu>
-        <NavigationMenuList>
-          {NavItems.map((NavItem, index) => (
-            <NavigationMenuItem key={index}>
-              <Link href={NavItem.href} legacyBehavior passHref>
-                {NavItem.children ? (
-                  <NavigationMenuTrigger>{NavItem.label}</NavigationMenuTrigger>
-                ) : (
-                  <NavigationMenuLink
-                    className={cn(navigationMenuTriggerStyle(), "w-full")}
-                  >
-                    {NavItem.label}
-                  </NavigationMenuLink>
-                )}
-              </Link>
-              {NavItem.children && (
-                <NavigationMenuContent
-                  className="flex flex-col gap-2 p-2"
-                  key={index}
-                >
-                  {NavItem.children?.map((child, index) => (
-                    <Link
-                      href={`${NavItem.href}/${child.href}`}
-                      legacyBehavior
-                      passHref
-                      key={index}
+      <div className="flex">
+        {NavItems.map((NavItem, index) => (
+          <NavigationMenu key={index}>
+            <NavigationMenuList>
+              <NavigationMenuItem key={index}>
+                <Link href={NavItem.href} legacyBehavior passHref>
+                  {NavItem.children ? (
+                    <NavigationMenuTrigger
+                      className={
+                        NavItem.href === pathname
+                          ? "text-primary"
+                          : "text-inherit"
+                      }
                     >
-                      <NavigationMenuLink
-                        className={cn(navigationMenuTriggerStyle(), "w-full")}
+                      {NavItem.label}
+                    </NavigationMenuTrigger>
+                  ) : (
+                    <NavigationMenuLink
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full  dark:text-inherit",
+                        NavItem.href === pathname
+                          ? "text-primary"
+                          : "text-inherit"
+                      )}
+                    >
+                      {NavItem.label}
+                    </NavigationMenuLink>
+                  )}
+                </Link>
+                {NavItem.children && (
+                  <NavigationMenuContent
+                    className="flex flex-col gap-2 p-2"
+                    key={index}
+                  >
+                    {NavItem.children?.map((child, index) => (
+                      <Link
+                        href={`${NavItem.href}/${child.href}`}
+                        legacyBehavior
+                        passHref
+                        key={index}
                       >
-                        {child.label}
-                      </NavigationMenuLink>
-                    </Link>
-                  ))}
-                </NavigationMenuContent>
-              )}
-            </NavigationMenuItem>
-          ))}
-        </NavigationMenuList>
-      </NavigationMenu>
+                        <NavigationMenuLink
+                          className={cn(
+                            navigationMenuTriggerStyle(),
+                            "w-full text-inherit dark:text-inherit"
+                          )}
+                        >
+                          {child.label}
+                        </NavigationMenuLink>
+                      </Link>
+                    ))}
+                  </NavigationMenuContent>
+                )}
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
-import { HomeIcon } from "@radix-ui/react-icons";
 import ThemeToggle from "./ThemeToggle";
 import MainNav from "./MainNav";
 import { Socials } from "@/configs/Socials";
@@ -12,19 +11,13 @@ const SiteHeader = () => {
         <MainNav />
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
-            <Link href="/">
-              <div
-                className={buttonVariants({
-                  size: "icon",
-                  variant: "ghost",
-                })}
-              >
-                <HomeIcon className="h-5 w-5" />
-                <span className="sr-only">Home</span>
-              </div>
-            </Link>
             {Socials.map((social, index) => (
-              <Link href={social.href} key={index} passHref>
+              <Link
+                href={social.href}
+                key={index}
+                passHref
+                className="dark:text-inherit text-inherit"
+              >
                 <div
                   className={buttonVariants({
                     size: "icon",
