@@ -15,8 +15,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const MainNav = () => {
-  const pathname = usePathname();
-  console.log(pathname);
+  const rawPathname = usePathname();
+  const pathname = rawPathname.replace("/md", "");
   return (
     <div className="flex gap-6 md:gap-10 h-16 ">
       <Link
@@ -28,7 +28,7 @@ const MainNav = () => {
           alt="FK BION"
           width={(593 / 321) * 48}
           height={48}
-          className="dark:invert max-h-full"
+          className="dark:invert "
         />
       </Link>
       <div className="flex">
@@ -36,7 +36,11 @@ const MainNav = () => {
           <NavigationMenu key={index}>
             <NavigationMenuList>
               <NavigationMenuItem key={index}>
-                <Link href={NavItem.href} legacyBehavior passHref>
+                <Link
+                  href={NavItem.md ? `/md/${NavItem.href}` : NavItem.href}
+                  legacyBehavior
+                  passHref
+                >
                   {NavItem.children ? (
                     <NavigationMenuTrigger
                       className={
@@ -68,7 +72,11 @@ const MainNav = () => {
                   >
                     {NavItem.children?.map((child, index) => (
                       <Link
-                        href={`${NavItem.href}/${child.href}`}
+                        href={
+                          child.md
+                            ? `/md/${NavItem.href}/${child.href}`
+                            : `${NavItem.href}/${child.href}`
+                        }
                         legacyBehavior
                         passHref
                         key={index}

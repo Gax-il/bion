@@ -10,9 +10,11 @@ export interface NavItem {
   label: string;
   href: string;
   children?: ChildNavItem[];
+  md?: boolean;
 }
 
 export interface ChildNavItem {
   label: string;
   href: string;
+  md?: boolean;
 }

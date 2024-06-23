@@ -3,6 +3,7 @@ import { buttonVariants } from "../ui/button";
 import ThemeToggle from "./ThemeToggle";
 import MainNav from "./MainNav";
 import { Socials } from "@/configs/Socials";
+import AuthButton from "../auth/AuthButton";
 
 const SiteHeader = () => {
   return (
@@ -29,6 +30,7 @@ const SiteHeader = () => {
                 </div>
               </Link>
             ))}
+            <AuthButton />
             <ThemeToggle />
           </nav>
         </div>

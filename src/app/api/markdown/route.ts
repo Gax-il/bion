@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import AWS from "aws-sdk";
+import { currentUser } from "@clerk/nextjs/server";
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
@@ -10,6 +11,9 @@ const s3 = new AWS.S3({
 const bucketName = process.env.AWS_S3_BUCKET_NAME!;
 
 export async function POST(req: NextRequest) {
+  const user = await currentUser();
+  console.log(user);
+
   try {
     const { filename, content } = await req.json();
 
