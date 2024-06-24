@@ -33,10 +33,10 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
       <html lang="cs" suppressHydrationWarning>
         <body className={inter.className}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
+            <div className="flex min-h-screen min flex-col min-w-screen">
               <SiteHeader />
-              <div className="container flex flex-col px-20 py-4">
-                <div className=" p-2">{children}</div>
+              <div className="container flex flex-col px-4 md:px-10 lg:px-20 py-4">
+                <div className="w-full">{children}</div>
               </div>
             </div>
           </ThemeProvider>

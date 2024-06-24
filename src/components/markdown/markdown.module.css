@@ -1,0 +1,31 @@
+.paragraph {
+  @apply mb-2 text-sm;
+}
+
+.unorderedList {
+  @apply mb-2 list-disc;
+}
+
+.listItem {
+  @apply text-sm ml-5;
+}
+
+.heading1 {
+  @apply mt-2;
+}
+
+.heading2 {
+  @apply mt-2;
+}
+
+.heading3 {
+  @apply mt-2;
+}
+
+.heading4 {
+  @apply mt-2;
+}
+
+.heading5 {
+  @apply mt-2;
+}

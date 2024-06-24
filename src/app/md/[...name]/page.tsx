@@ -1,8 +1,6 @@
-// src/app/md/[...name]/page.tsx
-
-import MarkdownViewer from "@/components/markdown/MarkdownViewer";
 import Image from "next/image";
 import { fetchMarkdown, fetchCatData } from "@/utils/public";
+import MarkdownView from "@/components/markdown/MarkdownView";
 
 export default async function MDPage({
   params,
@@ -49,7 +47,7 @@ export default async function MDPage({
           {content && (
             <>
               <h1>{title}</h1>
-              <MarkdownViewer content={content} />
+              <MarkdownView content={content} />
             </>
           )}
           {cat && (

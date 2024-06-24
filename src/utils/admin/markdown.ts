@@ -1,12 +1,11 @@
 "use server";
 
-import { auth, getAuth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import AWS from "aws-sdk";
 
 import matter from "gray-matter";
-import { Content } from "next/font/google";
 
-const editPage = async (
+export const editPage = async (
   filename: string,
   rawContent: string,
   title: string
@@ -45,10 +44,11 @@ const editPage = async (
     await s3.putObject(params).promise();
     return { ok: true, status: 200 };
   } catch (error: any) {
-    if (error?.code === "NoSuchKey") {
+    if (error?.code === "NotFound") {
       await s3.putObject(params).promise();
       return { ok: true, status: 200 };
     } else {
+      console.log(error);
       return { ok: false, status: 500 };
     }
   }

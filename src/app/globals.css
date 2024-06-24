@@ -7,15 +7,15 @@
     @apply text-primary hover:bg-primary-foreground;
   }
   h1 {
-    @apply text-3xl font-bold;
+    @apply text-3xl font-bold m-0;
   }
   h2 {
-    @apply text-2xl font-bold;
+    @apply text-2xl font-bold m-0;
   }
   h3 {
-    @apply text-xl font-bold;
+    @apply text-xl font-bold m-0;
   }
   h4 {
-    @apply text-lg font-bold;
+    @apply text-lg font-bold m-0;
   }
 }
