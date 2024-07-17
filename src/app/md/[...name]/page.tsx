@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { fetchMarkdown, fetchCatData } from "@/utils/public";
 import MarkdownView from "@/components/markdown/MarkdownView";
+import { Separator } from "@/components/ui/separator";
 
 export default async function MDPage({
   params,
@@ -47,6 +48,7 @@ export default async function MDPage({
           {content && (
             <>
               <h1>{title}</h1>
+              <Separator />
               <MarkdownView content={content} />
             </>
           )}

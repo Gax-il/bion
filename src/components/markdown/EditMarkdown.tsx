@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import matter from "gray-matter";
 import { Textarea } from "../ui/textarea";
 import { Input } from "../ui/input";
@@ -10,18 +10,35 @@ import { editPage } from "@/utils/admin/markdown";
 import MarkdownView from "./MarkdownView";
 
 interface MarkdownProps {
-  fileName?: string;
+  fileName: string;
+  content: string;
+  title: string;
 }
 
-const EditMarkdown: React.FC<MarkdownProps> = ({ fileName }: MarkdownProps) => {
-  const [content, setContent] = useState<{ actual: string; edited: string }>({
-    actual: "",
-    edited: "",
-  });
+const EditMarkdown: React.FC<MarkdownProps> = ({
+  fileName,
+  content,
+  title,
+}: MarkdownProps) => {
+  const [curContent, setContent] = useState<{ actual: string; edited: string }>(
+    {
+      actual: "",
+      edited: "",
+    }
+  );
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>("");
+  const [curTitle, setTitle] = useState<string>("");
   const [editMode, setEditMode] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (content) {
+      setContent({ actual: content, edited: content });
+    }
+    if (title) {
+      setTitle(title);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +51,7 @@ const EditMarkdown: React.FC<MarkdownProps> = ({ fileName }: MarkdownProps) => {
 
     console.log(content);
 
-    const res = await editPage(fileName, content.edited, title);
+    const res = await editPage(fileName, curContent.edited, title);
     console.log(res);
 
     if (res.ok) {
@@ -71,7 +88,7 @@ const EditMarkdown: React.FC<MarkdownProps> = ({ fileName }: MarkdownProps) => {
           {editMode ? <IconEyeCheck /> : <IconEdit />}
         </Button>
       </div>
-      <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
+      <div>
         {editMode && (
           <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
             <div style={{ marginBottom: "10px" }}>
@@ -85,7 +102,7 @@ const EditMarkdown: React.FC<MarkdownProps> = ({ fileName }: MarkdownProps) => {
                 disabled={isLoading}
                 type="text"
                 id="title"
-                value={title}
+                value={curTitle}
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 onInvalid={handleInvalid}
@@ -100,7 +117,7 @@ const EditMarkdown: React.FC<MarkdownProps> = ({ fileName }: MarkdownProps) => {
               </label>
               <Textarea
                 disabled={isLoading}
-                value={content.actual}
+                value={curContent.actual}
                 onChange={(e) => handleUpdate(e)}
                 rows={10}
                 placeholder="Zadejte text"
@@ -115,7 +132,7 @@ const EditMarkdown: React.FC<MarkdownProps> = ({ fileName }: MarkdownProps) => {
         {!editMode && (
           <div>
             <h2 className="text-2xl">{title ? title : ""}</h2>
-            <MarkdownView content={content.edited} />
+            <MarkdownView content={curContent.edited} />
           </div>
         )}
         {message && <p>{message}</p>}

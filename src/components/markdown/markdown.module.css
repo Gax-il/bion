@@ -11,21 +11,21 @@
 }
 
 .heading1 {
-  @apply mt-2;
+  @apply mt-2 text-2xl;
 }
 
 .heading2 {
-  @apply mt-2;
+  @apply mt-6 text-lg;
 }
 
 .heading3 {
-  @apply mt-2;
+  @apply mt-4 text-lg;
 }
 
 .heading4 {
-  @apply mt-2;
+  @apply mt-2 text-lg;
 }
 
 .heading5 {
-  @apply mt-2;
+  @apply mt-2 text-lg;
 }

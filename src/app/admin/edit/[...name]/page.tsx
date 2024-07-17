@@ -1,8 +1,9 @@
 import CreateMarkdown from "@/components/markdown/CreateMarkdown";
 import EditMarkdown from "@/components/markdown/EditMarkdown";
 import { NavItems } from "@/configs/NavItems";
+import { fetchMarkdown } from "@/utils/public";
 
-const EditPage = (params: { params: { name: string | string[] } }) => {
+const EditPage = async (params: { params: { name: string | string[] } }) => {
   let name = "";
   if (Array.isArray(params.params.name)) {
     for (const nme of params.params.name) {
@@ -10,6 +11,24 @@ const EditPage = (params: { params: { name: string | string[] } }) => {
     }
   } else {
     name = params.params.name;
+  }
+
+  let content: string | null = null;
+  let title: string | null = null;
+
+  try {
+    const res = await fetchMarkdown(name);
+
+    if (res.ok) {
+      console.log(res);
+      content = res.data?.content || "";
+      title = res.data?.title || "";
+    } else {
+      title = "";
+      content = "";
+    }
+  } catch (err) {
+    throw err;
   }
 
   let pageName = [];
@@ -41,7 +60,11 @@ const EditPage = (params: { params: { name: string | string[] } }) => {
         <h1>Editace</h1>
         <h2 className="font-medium">{pageName.map((name) => ` - ${name}`)}</h2>
       </span>
-      <EditMarkdown fileName={fileName || ""} />
+      <EditMarkdown
+        fileName={fileName || ""}
+        content={content || ""}
+        title={title || ""}
+      />
     </div>
   );
 };
