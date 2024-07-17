@@ -48,19 +48,15 @@ const EditMarkdown: React.FC<MarkdownProps> = ({
     }
 
     setIsLoading(true);
-
-    console.log(content);
-
-    const res = await editPage(fileName, curContent.edited, title);
-    console.log(res);
+    const res = await editPage(fileName, curContent.edited, curTitle);
 
     if (res.ok) {
-      setMessage("Markdown file created successfully");
+      setMessage("Markdown soubor úspěšně upraven");
     } else {
       if (res.status === 418) {
-        setMessage("Markdown file doesnt exist");
+        setMessage("Markdown soubor neexistuje");
       } else {
-        setMessage("Error creating markdown file");
+        setMessage("Error při upravování markdown souboru");
       }
     }
 
@@ -125,7 +121,7 @@ const EditMarkdown: React.FC<MarkdownProps> = ({
               />
             </div>
             <Button type="submit" disabled={isLoading}>
-              Create
+              Editovat
             </Button>
           </form>
         )}

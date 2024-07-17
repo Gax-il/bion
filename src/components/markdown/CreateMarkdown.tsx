@@ -40,9 +40,9 @@ const CreateMarkdown: React.FC = () => {
     const result = await response.json();
 
     if (response.ok) {
-      setMessage("Markdown file created successfully");
+      setMessage("Markdown úspěšně vytvořen");
     } else {
-      setMessage(result.error || "Error creating markdown file");
+      setMessage(result.error || "Error při vytváření markdown souboru");
     }
     setIsLoading(false);
   };
@@ -122,7 +122,7 @@ const CreateMarkdown: React.FC = () => {
             />
           </div>
           <Button type="submit" disabled={isLoading}>
-            Create
+            Vytvořit
           </Button>
         </form>
       )}
