@@ -74,7 +74,7 @@ const MainNav = () => {
                       <Link
                         href={
                           child.md
-                            ? `/md/${NavItem.href}/${child.href}`
+                            ? `/md/${child.href}`
                             : `${NavItem.href}/${child.href}`
                         }
                         legacyBehavior
